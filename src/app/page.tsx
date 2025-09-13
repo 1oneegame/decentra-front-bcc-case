@@ -1,103 +1,140 @@
-import Image from "next/image";
+"use client";
+
+import { Grid, GridItem } from "@/components/grid";
+import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
+import { TypingAnimation } from "@/components/magicui/typing-animation";
+import NavigationBar from "@/components/navbar";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const router = useRouter();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <NavigationBar />
+      <section className="container mx-auto px-4 pt-20 pb-8">
+        <Grid columns={1} noBorder={["bottom"]} crossPosition={["top-left", "top-right"]}>
+          <GridItem className="text-center">
+            <TypingAnimation className="text-5xl font-bold text-blue-800 mb-6" duration={100} delay={100}>
+              Персонализированные пуш-уведомления
+            </TypingAnimation>
+            <p className="text-xl text-slate-600 mb-10 max-w-3xl mx-auto">
+              Решение, которое анализирует поведение клиентов и генерирует релевантные предложения с точным расчетом выгоды
+            </p>
+            <div className="bg-red-50 border border-red-200 rounded-none p-4 max-w-4xl mx-auto">
+              <h2 className="text-2xl font-semibold text-red-800 mb-4">Проблема</h2>
+              <p className="text-red-700 text-lg">
+                Сейчас пуш-уведомления идут «одинаковыми для всех»: «Откройте такую-то карту». 
+                Они не учитывают реальные привычки человека, не объясняют пользу. 
+                Результат — низкий интерес, конверсия и усталость от нерелевантных сообщений.
+              </p>
+            </div>
+          </GridItem>
+        </Grid>
+        <Grid noBorder={["top"]} crossPosition={["bottom-left", 'bottom-right']}>
+          <GridItem className="text-center flex items-start justify-center">
+            <InteractiveHoverButton className="shadow-sm" onClick={() => router.push("/analyze")}>Попробовать</InteractiveHoverButton>
+          </GridItem>
+        </Grid>
+      </section>
+
+      <section className="container mx-auto px-4 pb-6">
+        <Grid columns={1} noBorder={["bottom"]} crossPosition={["top-left", "top-right"]}>
+          <GridItem className="text-center">
+            <h2 className="text-4xl font-bold mb-6 text-slate-900">Как работает решение</h2>
+          </GridItem>
+        </Grid>
+        
+        <Grid columns={4}  crossPosition="all-corners">
+          <GridItem className="text-center">
+            <div className="w-16 h-16 bg-blue-100 rounded-none flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl font-bold text-blue-600">1</span>
+            </div>
+            <h3 className="text-xl font-semibold text-slate-900 mb-3">Анализ данных</h3>
+            <p className="text-slate-600">
+              Анализируем поведение клиентов по данным за 3 месяца: такси, поездки, онлайн-сервисы, остатки
+            </p>
+          </GridItem>
+          
+          <GridItem className="text-center">
+            <div className="w-16 h-16 bg-blue-100 rounded-none flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl font-bold text-blue-600">2</span>
+            </div>
+            <h3 className="text-xl font-semibold text-slate-900 mb-3">Расчет выгоды</h3>
+            <p className="text-slate-600">
+              Вычисляем ожидаемую выгоду для клиента по каждому продукту: кешбэк, проценты, экономия комиссий
+            </p>
+          </GridItem>
+          
+          <GridItem className="text-center">
+            <div className="w-16 h-16 bg-blue-100 rounded-none flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl font-bold text-blue-600">3</span>
+            </div>
+            <h3 className="text-xl font-semibold text-slate-900 mb-3">Выбор продукта</h3>
+            <p className="text-slate-600">
+              Выбираем самый полезный продукт на основе анализа поведения и потенциальной выгоды
+            </p>
+          </GridItem>
+          
+          <GridItem className="text-center">
+            <div className="w-16 h-16 bg-blue-100 rounded-none flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl font-bold text-blue-600">4</span>
+            </div>
+            <h3 className="text-xl font-semibold text-slate-900 mb-3">Персонализация</h3>
+            <p className="text-slate-600">
+              Генерируем персонализированное пуш-уведомление в корректном тоне с объяснением конкретной пользы
+            </p>
+          </GridItem>
+        </Grid>
+      </section>
+
+      <section className="container mx-auto px-4 pb-6">
+        <Grid columns={2} crossPosition={['top-center', 'bottom-center', 'top-left', 'top-right', 'bottom-left', 'bottom-right']}>
+          <GridItem>
+            <h2 className="text-3xl font-bold text-slate-900 mb-6">Преимущества для банка</h2>
+            <ul className="space-y-4">
+              <li className="flex items-start">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <span className="text-slate-700">Увеличение конверсии в 3-5 раз</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <span className="text-slate-700">Снижение отказов от уведомлений</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <span className="text-slate-700">Повышение лояльности клиентов</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <span className="text-slate-700">Рост продаж банковских продуктов</span>
+              </li>
+            </ul>
+          </GridItem>
+          
+          <GridItem>
+            <h2 className="text-3xl font-bold text-slate-900 mb-6">Преимущества для клиентов</h2>
+            <ul className="space-y-4">
+              <li className="flex items-start">
+                <div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <span className="text-slate-700">Релевантные предложения под их образ жизни</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <span className="text-slate-700">Понятное объяснение выгоды</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <span className="text-slate-700">Максимальный кешбэк и экономия</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <span className="text-slate-700">Отсутствие спама и нерелевантных уведомлений</span>
+              </li>
+            </ul>
+          </GridItem>
+        </Grid>
+      </section>
     </div>
   );
 }
