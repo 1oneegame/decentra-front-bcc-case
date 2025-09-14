@@ -5,17 +5,37 @@ import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-b
 import { TypingAnimation } from "@/components/magicui/typing-animation";
 import NavigationBar from "@/components/navbar";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const router = useRouter();
+  const [isConnected, setIsConnected] = useState<boolean | null>(null);
+
+  const checkConnection = async () => {
+    try {
+      const response = await fetch('/api/analyze', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }); 
+      setIsConnected(response.ok);
+    } catch {
+      setIsConnected(false);
+    }
+  };
+
+  useEffect(() => {
+    checkConnection();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <NavigationBar />
-      <section className="container mx-auto px-4 pt-20 pb-8">
+      <section className="container mx-auto px-4 pt-20 ">
         <Grid columns={1} noBorder={["bottom"]} crossPosition={["top-left", "top-right"]}>
           <GridItem className="text-center">
-            <TypingAnimation className="text-5xl font-bold text-blue-800 mb-6" duration={100} delay={100}>
+            <TypingAnimation className="text-5xl font-bold text-slate-900 mb-6" duration={100} delay={100}>
               Персонализированные пуш-уведомления
             </TypingAnimation>
             <p className="text-xl text-slate-600 mb-10 max-w-3xl mx-auto">
@@ -38,52 +58,31 @@ export default function Home() {
         </Grid>
       </section>
 
-      <section className="container mx-auto px-4 pb-6">
-        <Grid columns={1} noBorder={["bottom"]} crossPosition={["top-left", "top-right"]}>
-          <GridItem className="text-center">
-            <h2 className="text-4xl font-bold mb-6 text-slate-900">Как работает решение</h2>
-          </GridItem>
-        </Grid>
-        
-        <Grid columns={4}  crossPosition="all-corners">
-          <GridItem className="text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-none flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-blue-600">1</span>
+      <section className="container mx-auto px-4">
+        <Grid columns={3} noBorder={["bottom"]} crossPosition={["top-left", "top-right"]}>
+          <GridItem className="col-span-2">
+            {/*
+            {isConnected === null ? (
+              <span className="border-b border-blue-800 animate-spin w-4 h-4 inline-block rounded-full"></span>
+            ) : isConnected ? (
+              <p className="text-green-500">Подключение успешно</p>
+            ) : (
+              <p className="text-red-500">Подключение не успешно</p>
+            )}
+            */}
+            <h2 className="text-2xl font-bold text-slate-900 mb-6">Проверка подключения к внешнему API:</h2>
+            <div className="flex items-center gap-x-4">
+              <span className="border-b border-blue-800 animate-spin w-8 h-8 inline-block rounded-full"></span>
+              <p className="text-slate-700 text-md">Идет проверка... Пожалуйста, подождите...</p>
             </div>
-            <h3 className="text-xl font-semibold text-slate-900 mb-3">Анализ данных</h3>
-            <p className="text-slate-600">
-              Анализируем поведение клиентов по данным за 3 месяца: такси, поездки, онлайн-сервисы, остатки
-            </p>
           </GridItem>
-          
-          <GridItem className="text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-none flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-blue-600">2</span>
+          <GridItem className="col-span-1">
+            <div className="">
+              <h3 className="text-2xl font-semibold text-slate-900 mb-3">Технологии</h3>
+              <p className="text-slate-600">
+                Используем машинное обучение и анализ больших данных для создания точных персонализированных предложений
+              </p>
             </div>
-            <h3 className="text-xl font-semibold text-slate-900 mb-3">Расчет выгоды</h3>
-            <p className="text-slate-600">
-              Вычисляем ожидаемую выгоду для клиента по каждому продукту: кешбэк, проценты, экономия комиссий
-            </p>
-          </GridItem>
-          
-          <GridItem className="text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-none flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-blue-600">3</span>
-            </div>
-            <h3 className="text-xl font-semibold text-slate-900 mb-3">Выбор продукта</h3>
-            <p className="text-slate-600">
-              Выбираем самый полезный продукт на основе анализа поведения и потенциальной выгоды
-            </p>
-          </GridItem>
-          
-          <GridItem className="text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-none flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-blue-600">4</span>
-            </div>
-            <h3 className="text-xl font-semibold text-slate-900 mb-3">Персонализация</h3>
-            <p className="text-slate-600">
-              Генерируем персонализированное пуш-уведомление в корректном тоне с объяснением конкретной пользы
-            </p>
           </GridItem>
         </Grid>
       </section>
